@@ -38,7 +38,7 @@ EOS
     end
 
     @server.location "/image" do |r|
-      path = File.join server.config[:document_root], r.path
+      path = File.join server.config[:document_root], "..", r.path
       @server.file_response r, path, "image/jpeg"
     end
   end
