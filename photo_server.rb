@@ -1,3 +1,5 @@
+require 'simplehttpserver'
+
 class PhotoServer
   def initialize
     @server = SimpleHttpServer.new({
@@ -23,16 +25,21 @@ class PhotoServer
 </head>
 <body>
   <h1>Photo Server</h1>
-  <img src="0.jpg" width="128" height="128">
-  <img src="1.jpg" width="128" height="128">
-  <img src="3.jpg" width="128" height="128">
-  <img src="4.jpg" width="128" height="128">
-  <img src="5.jpg" width="128" height="128">
+  <img src="/image/0.jpg" width="128" height="128">
+  <img src="/image/1.jpg" width="128" height="128">
+  <img src="/image/2.jpg" width="128" height="128">
+  <img src="/image/3.jpg" width="128" height="128">
+  <img src="/image/4.jpg" width="128" height="128">
 </body>
 </html>
 EOS
 
       @server.create_response
+    end
+
+    @server.location "/image" do |r|
+      path = File.join server.config[:document_root], r.path
+      @server.file_response r, path, "image/jpeg"
     end
   end
 
