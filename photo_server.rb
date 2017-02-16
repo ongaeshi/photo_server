@@ -1,10 +1,10 @@
 class PhotoServer
   def initialize
     @server = SimpleHttpServer.new({
-      :server_ip => "0.0.0.0",
-      :port  =>  8000,
-      :document_root => File.join(File.dirname(__FILE__), "image"),
-    })
+                                     :server_ip => "0.0.0.0",
+                                     :port  =>  8000,
+                                     :document_root => File.join(File.dirname(__FILE__), "image"),
+                                   })
 
     @server.http do |r|
       @server.set_response_headers({
@@ -32,7 +32,8 @@ class PhotoServer
 </html>
 EOS
 
-    @server.create_response
+      @server.create_response
+    end
   end
 
   def run
