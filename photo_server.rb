@@ -4,8 +4,8 @@ class PhotoServer
   def initialize
     @server = SimpleHttpServer.new({
       :server_ip => "0.0.0.0",
-      :port  =>  8000,
-      :document_root => File.join(File.dirname(__FILE__), "image"),
+      :port => 8000,
+      :document_root => File.dirname(__FILE__),
       :block => false
     })
 
@@ -39,7 +39,7 @@ EOS
     end
 
     @server.location "/image" do |r|
-      path = File.join @server.config[:document_root], "..", r.path
+      path = File.join @server.config[:document_root], r.path
       # p path
       # p File.size path
       @server.file_response r, path, "image/jpeg"
