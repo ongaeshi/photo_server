@@ -30,7 +30,7 @@ class PhotoServer
 </head>
 <body>
   <h1>Photo Server</h1>
-  #{paths.map { |e| "<img src=\"#{e}\" width=\"128\" height=\"128\">" }.join("\n") }
+  #{paths.map { |e| "<img src=\"#{e}\" width=\"256\">" }.join("\n")}
 </body>
 </html>
 EOS
