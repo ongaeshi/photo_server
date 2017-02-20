@@ -52,13 +52,13 @@ EOS
   end
 end
 
-#---------------------------------------
+#---
 imgs = Image.pick_from_library(50)
 paths = []
 
 image_dir = File.join(document_root, "image")
-Dir.delete image_dir if Dir.exist? image_dir
-Dir.mkdir image_dir
+Dir.mkdir image_dir unless Dir.exist? image_dir
+Dir.foreach(image_dir) { |e| File.delete(e) if File.file?(e) }
 
 imgs.each_with_index do |img, no|
   img = img.resize(640, img.h)
@@ -69,3 +69,4 @@ imgs.each_with_index do |img, no|
 end
 
 PhotoServer.new(paths).run
+
