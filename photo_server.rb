@@ -3,16 +3,17 @@ require 'simplehttpserver'
 class PhotoServer
   def initialize
     @server = SimpleHttpServer.new({
-                                     :server_ip => "0.0.0.0",
-                                     :port  =>  8000,
-                                     :document_root => File.join(File.dirname(__FILE__), "image"),
-                                   })
+      :server_ip => "0.0.0.0",
+      :port  =>  8000,
+      :document_root => File.join(File.dirname(__FILE__), "image"),
+      :block => false
+    })
 
     @server.http do |r|
       @server.set_response_headers({
-                                     "Server" => "photo_server",
-                                     "Date" => @server.http_date,
-                                   })
+        "Server" => "photo_server",
+        "Date" => @server.http_date,
+      })
     end
 
     @server.location "/" do |r|
@@ -38,7 +39,9 @@ EOS
     end
 
     @server.location "/image" do |r|
-      path = File.join server.config[:document_root], "..", r.path
+      path = File.join @server.config[:document_root], "..", r.path
+      # p path
+      # p File.size path
       @server.file_response r, path, "image/jpeg"
     end
   end
