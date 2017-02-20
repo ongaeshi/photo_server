@@ -1,7 +1,7 @@
 require 'simplehttpserver'
 
 class PhotoServer
-  def initialize
+  def initialize(paths)
     @server = SimpleHttpServer.new({
       :server_ip => "0.0.0.0",
       :port => 8000,
@@ -26,11 +26,7 @@ class PhotoServer
 </head>
 <body>
   <h1>Photo Server</h1>
-  <img src="/image/0.jpg" width="128" height="128">
-  <img src="/image/1.jpg" width="128" height="128">
-  <img src="/image/2.jpg" width="128" height="128">
-  <img src="/image/3.jpg" width="128" height="128">
-  <img src="/image/4.jpg" width="128" height="128">
+  #{paths.map { |e| "<img src=\"#{e}\" width=\"128\" height=\"128\">" }.join("\n") }
 </body>
 </html>
 EOS
@@ -52,4 +48,5 @@ EOS
   end
 end
 
-PhotoServer.new.run
+paths = %w(/image/0.jpg /image/1.jpg /image/2.jpg /image/3.jpg)
+PhotoServer.new(paths).run
