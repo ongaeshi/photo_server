@@ -1,11 +1,15 @@
 require 'simplehttpserver'
 
+def document_root
+  File.dirname(__FILE__)
+end
+
 class PhotoServer
   def initialize(paths)
     @server = SimpleHttpServer.new({
       :server_ip => "0.0.0.0",
       :port => 8000,
-      :document_root => File.dirname(__FILE__),
+      :document_root => document_root,
       :block => false
     })
 
@@ -48,5 +52,16 @@ EOS
   end
 end
 
-paths = %w(/image/0.jpg /image/1.jpg /image/2.jpg /image/3.jpg)
+#---------------------------------------
+imgs = Image.pick_from_library(50)
+paths = []
+
+imgs.each_with_index do |img, no|
+  img = img.resize(320, img.h)
+  filename = File.join(document_root, "image/#{no}.jpg")
+  img.save_to(filename)
+  paths << filename
+  puts filename
+end
+
 PhotoServer.new(paths).run
