@@ -58,7 +58,10 @@ paths = []
 
 image_dir = File.join(document_root, "image")
 Dir.mkdir image_dir unless Dir.exist? image_dir
-Dir.foreach(image_dir) { |e| File.delete(e) if File.file?(e) }
+Dir.foreach(image_dir) do |e|
+  path = File.join(image_dir, e)
+  File.delete(path) if File.file?(path)
+end
 
 imgs.each_with_index do |img, no|
   img = img.resize(640, img.h)
