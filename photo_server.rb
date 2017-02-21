@@ -10,7 +10,6 @@ class PhotoServer
       :server_ip => "0.0.0.0",
       :port => 8000,
       :document_root => document_root,
-      :block => false
     })
 
     @server.http do |r|
